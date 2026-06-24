@@ -1,0 +1,41 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  font-family: system-ui, sans-serif;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  color: #646cff;
+  margin: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.online { background: #22c55e; }
+.dot.offline { background: #ef4444; }
+
+.hint {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0;
+}
