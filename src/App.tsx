@@ -1,30 +1,22 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AuthProvider } from './auth/auth-context'
+import { ProtectedRoute } from './auth/protected-route'
+import Callback from './routes/callback'
+import Home from './routes/home'
+import Login from './routes/login'
 
-function App() {
-  const [online, setOnline] = useState(navigator.onLine)
-
-  useEffect(() => {
-    const handleOnline = () => setOnline(true)
-    const handleOffline = () => setOnline(false)
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
-
+export default function App() {
   return (
-    <main>
-      <h1>Hello, World!</h1>
-      <p className="status">
-        <span className={`dot ${online ? 'online' : 'offline'}`} />
-        {online ? 'Online' : 'Offline'}
-      </p>
-      <p className="hint">Install this app from the browser address bar.</p>
-    </main>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/callback" element={<Callback />} />
+          <Route element={<ProtectedRoute />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
-
-export default App

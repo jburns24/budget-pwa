@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -9,9 +10,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Hello World PWA',
-        short_name: 'HelloPWA',
-        description: 'A minimal hello world Progressive Web App',
+        name: 'Budget',
+        short_name: 'Budget',
+        description: 'Personal budget tracker PWA',
         theme_color: '#646cff',
         background_color: '#ffffff',
         display: 'standalone',
@@ -22,7 +23,20 @@ export default defineConfig({
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
+      workbox: {
+        // Prevent SW from intercepting the OAuth callback with cached HTML
+        navigateFallbackDenylist: [/^\/auth\/callback/],
+      },
       devOptions: { enabled: true },
     }),
   ],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    coverage: {
+      provider: 'v8',
+    },
+  },
 })
